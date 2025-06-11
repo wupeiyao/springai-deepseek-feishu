@@ -1,0 +1,68 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: springai_deepseek_feishu_rag
+  ai:
+    openai:
+      api-key: ${ai.openai.api-key}
+      base-url: ${ai.openai.base-url}
+      chat:
+        options:
+          model: ${ai.openai.default-deepseek-model}
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 384
+        max-document-batch-size: 10000
+  profiles:
+    active: dev
+  datasource:
+    url: jdbc:postgresql://localhost:5432/springai
+    username: postgres
+    password: 123456
+
+feishu:
+  appId: ${feishu.appId}
+  appSecret: ${feishu.appSecret}
+  rootFolder: JNohwzwP4isogSkBU5ncU76znLc
+
+
+
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    tags-sorter: alpha
+    operations-sorter: alpha
+
+  api-docs:
+    path: /v3/api-docs
+
+  group-configs:
+    - group: 'default'
+      paths-to-match: '/**'
+      packages-to-scan: com.xiaowu.springai.controller
+
+knife4j:
+  enable: true
+  production: false
+  setting:
+    language: zh_cn
+  basic:
+    enable: true
+    username: xiaowu
+    password: 123456
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+  mapper-locations: classpath:/mapper/**/*.xml
+
+
